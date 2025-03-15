@@ -1,0 +1,76 @@
+/* General message container */
+.message {
+    background: white;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+/* Header */
+.message-header {
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
+    line-height: 1.2em;
+    background: #bbb;
+    color: #FFF;
+    text-shadow: 1px 1px #0002;
+    border-bottom: 1px solid #ddd;
+    padding: 3px 5px;
+    transition: background 0.2s ease-in-out;
+}
+
+/* Hover and state-based styles */
+.message-header:hover {
+    background: #888;
+}
+
+.message:target .message-header {
+    background: #666;
+}
+
+.message.unread .message-header {
+    background: #888;
+}
+
+/* Header elements */
+.message-header .author {
+    flex-grow: 1;
+    color: #FFF;
+}
+
+.message-header .timestamp {
+    flex-shrink: 0;
+    padding-left: 10px;
+}
+
+/* Header links */
+.message-header a {
+    text-decoration: none;
+    font-weight: normal;
+    color: inherit;
+}
+
+/* Body */
+.message-body {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    line-height: 1.5em;
+}
+
+/* Footer */
+.message-footer {
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
+    background: #f7f7f7;
+    border-top: 1px solid #eee;
+    padding: 3px 5px;
+}
+
+/* Read status inside footer */
+.message-footer .read-status {
+    flex: 1;
+    text-align: right;
+    padding: 1px;
+}

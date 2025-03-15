@@ -1,0 +1,101 @@
+/* General reply container */
+.reply {
+    background: white;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+/* Reply Header */
+.reply-header {
+    font-size: 0.8em;
+    border-bottom: 1px solid #eee;
+    background: #f7f7f7;
+    text-align: center;
+    padding: 3px;
+}
+
+.reply-header .title {
+    padding: 3px 5px;
+    color: #777;
+    width: 100%;
+    text-decoration: none;
+}
+
+/* Reply Body */
+.reply-body {
+    padding: 10px;
+    font-size: 0.9em;
+    align-items: center;
+    line-height: 1.5em;
+}
+
+.reply-body .timestamp {
+    font-family: monospace;
+    float: left;
+    padding-right: 15px;
+    font-size: 1em;
+}
+
+/* Reply Footer */
+.reply-footer {
+    color: #aaa;
+    padding: 8px 10px;
+    font-size: 0.8em;
+    text-align: right;
+    background: #f7f7f7;
+    border-top: 1px solid #eee;
+    min-height: 10px;
+}
+
+/* Reply Fields */
+.reply-fields textarea {
+    width: 100%;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+/* Form Elements */
+input, textarea, select {
+    border: 1px solid #ddd;
+    color: #777;
+    font-weight: normal;
+    border-radius: 0;
+}
+
+input::placeholder, textarea::placeholder, select::placeholder {
+    color: #aaa;
+}
+
+input:hover, textarea:hover, select:hover {
+    border: 1px solid #aaa;
+    color: #444;
+}
+
+/* Buttons */
+input[type="submit"],
+input[type="reset"] {
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    color: #777;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+input[type="submit"] {
+    background: #ddd;
+    border: 1px solid #aaa;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+    background: #ddd;
+    border: 1px solid #aaa;
+    color: #444;
+}
+
+input[type="submit"]:hover {
+    background: #ccc;
+    border: 1px solid #888;
+}

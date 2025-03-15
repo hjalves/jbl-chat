@@ -1,0 +1,140 @@
+{% extends "chat/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link href="{% static 'chat/css/messages.css' %}" media="all" rel="stylesheet">
+<link href="{% static 'chat/css/writeform.css' %}" media="all" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Anna</a>
+    <a class="timestamp">2021-01-01 00:00:00</a>
+  </div>
+  <div class="message-body">
+    Hey, I’m trying to optimize my website’s performance. It feels a bit sluggish. Any tips?
+  </div>
+</article>
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Bob</a>
+    <a class="timestamp">2021-01-01 00:01:00</a>
+  </div>
+  <div class="message-body">
+    Definitely! What framework or stack are you using?
+  </div>
+</article>
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Anna</a>
+    <a class="timestamp">2021-01-01 00:02:00</a>
+  </div>
+  <div class="message-body">
+    It’s a React app with a Node.js backend.
+  </div>
+</article>
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Bob</a>
+    <a class="timestamp">2021-01-01 00:03:00</a>
+  </div>
+  <div class="message-body">
+    Got it. First thing—have you checked for unnecessary re-renders? React’s rendering behavior can sometimes slow things down.
+  </div>
+</article>
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Anna</a>
+    <a class="timestamp">2021-01-01 00:04:00</a>
+  </div>
+  <div class="message-body">
+    Hmm, not really. How do I check that?
+  </div>
+</article>
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Bob</a>
+    <a class="timestamp">2021-01-01 00:05:00</a>
+  </div>
+  <div class="message-body">
+    Use React DevTools. The ‘Profiler’ tab helps identify components that render too often. Also, consider using `React.memo` and `useCallback` to optimize renders.
+  </div>
+</article>
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Anna</a>
+    <a class="timestamp">2021-01-01 00:06:00</a>
+  </div>
+  <div class="message-body">
+    Oh, good point! What about images and assets? I think they might be taking a while to load.
+  </div>
+</article>
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Bob</a>
+    <a class="timestamp">2021-01-01 00:07:00</a>
+  </div>
+  <div class="message-body">
+    Yeah, large images can really slow things down. Use next-gen formats like WebP, lazy load images, and compress assets. You can also use a CDN to serve static files faster.
+  </div>
+</article>
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Anna</a>
+    <a class="timestamp">2021-01-01 00:08:00</a>
+  </div>
+  <div class="message-body">
+    I see! What about the backend? Any quick wins there?
+  </div>
+</article>
+<article class="message">
+  <div class="message-header">
+    <a class="author" href="#">Bob</a>
+    <a class="timestamp">2021-01-01 00:09:00</a>
+  </div>
+  <div class="message-body">
+    Caching is key. Implement Redis or use HTTP caching headers to reduce redundant requests. Also, optimize your database queries—use indexing and avoid unnecessary joins.
+  </div>
+</article>
+<article class="message unread">
+  <div class="message-header">
+    <a class="author" href="#">Anna</a>
+    <a class="timestamp">2021-01-01 00:10:00</a>
+  </div>
+  <div class="message-body">
+    That makes sense. I’ll start with React DevTools and then tackle the backend optimizations. Thanks for the help!
+  </div>
+</article>
+<article class="message unread">
+  <div class="message-header">
+    <a class="author" href="#">Bob</a>
+    <a class="timestamp">2021-01-01 00:11:00</a>
+  </div>
+  <div class="message-body">
+    No problem! Let me know if you need more tips.
+  </div>
+  <div class="message-footer">
+    <div class="read-status">
+      Read on 2021-01-01 00:12:00
+    </div>
+  </div>
+</article>
+<article class="reply">
+  <form class="reply-form" method="post">
+    {% csrf_token %}
+    <div class="reply-header">
+      <span class="title">Write a message</span>
+    </div>
+    <div class="reply-body">
+      <div class="reply-fields">
+        <textarea name="message" rows="5" placeholder="Type your message here"></textarea>
+      </div>
+    </div>
+    <div class="reply-footer">
+      <input type="reset" value="Clear" title="Clear your message">
+      <input type="submit" value="Send message" title="Send your message">
+    </div>
+  </form>
+</article>
+{% endblock %}

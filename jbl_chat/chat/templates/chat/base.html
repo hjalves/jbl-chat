@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JBL Chat</title>
+  <link href="{% static 'chat/css/common.css' %}" media="all" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% block extrastyle %}{% endblock %}
+</head>
+<body>
+<aside>
+<nav>
+  <ul>
+    <li class="title">JBL Chat</li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">API</a></li>
+  </ul>
+</nav>
+<nav>
+  <ul>
+    <li class="title">Chats</li>
+    <li><a href="#">Anna</a></li>
+    <li><a href="#">Bob</a></li>
+    <li><a href="#">Charlie</a></li>
+  </ul>
+</nav>
+</aside>
+<main class="content">
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>

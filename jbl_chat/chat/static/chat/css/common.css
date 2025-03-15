@@ -1,0 +1,130 @@
+body {
+    font-family: arial, helvetica, sans-serif;
+    background-color: #eee;
+    color: #222;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: underline solid #c9c9c9;
+    color: #222;
+}
+
+.title a {
+    color: #777;
+}
+
+a:hover {
+    text-decoration-thickness: 2px;
+    font-weight: bold;
+    color: #222;
+}
+
+a.current {
+    font-weight: bold;
+    color: #222;
+}
+
+
+aside {
+    position: fixed;
+    width: 200px;
+    overflow-y: auto;
+    top: 0;
+    bottom: 0;
+}
+
+aside nav {
+    position: static;
+    left: 0;
+    margin: 20px 10px 20px 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+}
+
+aside nav ul {
+    margin: 20px 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+aside nav li {
+    margin-left: 0;
+    font-size: 0.9em;
+    margin-top: 0.5em;
+    /*white-space: nowrap;*/
+}
+
+aside nav li.title, aside nav label {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    margin: 0 0 1em 0;
+    color: #777;
+}
+
+aside nav li.title:hover, aside nav label:hover {
+    color: #222;
+}
+
+aside nav small {
+    color: #aaa;
+    vertical-align: text-top;
+}
+
+main.content {
+    position: static;
+    margin: 20px 20px 20px 210px;
+
+}
+
+.page {
+    padding: 20px 40px;
+    background-color: white;
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+    line-height: 1.5em;
+}
+
+.page ul, .page ol {
+    padding-left: 25px;
+}
+
+
+.footer {
+    padding: 20px 40px;
+    background-color: white;
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+}
+
+abbr[title] {
+    text-decoration: underline dotted 1px;
+}
+
+/* Mobile */
+
+@media (max-width: 767px) {
+    aside {
+        position: static;
+        width: auto;
+        margin: 10px 10px;
+    }
+
+    aside nav {
+        margin: 10px 10px;
+    }
+
+    main.content {
+        margin: 10px 20px 20px 20px;
+    }
+
+    .responsive-hide {
+        display: none;
+    }
+
+}
