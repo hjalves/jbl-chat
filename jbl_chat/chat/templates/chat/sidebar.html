@@ -1,0 +1,28 @@
+<aside>
+  <nav>
+    <ul>
+      <li class="title">JBL Chat</li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">API</a></li>
+    </ul>
+  </nav>
+  <nav>
+    <ul>
+      <li class="title">Chats</li>
+      {% for profile in chat_profiles %}
+      <li><a href="{% url 'chat:chat' profile.nickname %}">{{ profile.nickname }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+  <nav class="user-info">
+    <ul>
+      <li class="title">User</li>
+      {% if user.is_authenticated %}  <!-- We assume the user has a profile -->
+      <li>{{ user.profile.nickname }}</li>
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+      {% else %}
+      <li><a href="{% url 'login' %}">Login</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</aside>

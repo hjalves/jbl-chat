@@ -1,0 +1,41 @@
+{% extends "chat/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link href="{% static 'chat/css/messages.css' %}" media="all" rel="stylesheet">
+<link href="{% static 'chat/css/writeform.css' %}" media="all" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+{% for message in messages %}
+<article class="message {% if message.unread %}unread{% endif %}">
+  <div class="message-header">
+    <a class="author" href="#">{{message.sender.full_name}} @{{ message.sender }}</a>
+    <a class="timestamp">{{ message.timestamp }}</a>
+  </div>
+  <div class="message-body">
+    {{ message.content }}
+  </div>
+</article>
+{% endfor %}
+
+<article class="reply">
+  <form class="reply-form" method="post">
+    {% csrf_token %}
+    <div class="reply-header">
+      <span class="title">Write a message</span>
+    </div>
+    <div class="reply-body">
+      <div class="reply-fields">
+        {{ form.content }}
+      </div>
+    </div>
+
+    <div class="reply-footer">
+      <input type="reset" value="Clear" title="Clear your message">
+      <input type="submit" value="Send message" title="Send your message">
+    </div>
+  </form>
+</article>
+{% endblock %}

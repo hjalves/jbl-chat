@@ -111,10 +111,18 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False  # This was set to False, to ease the customization of the date formats.
 
 USE_TZ = True
 
+
+# Datetime formats
+
+DATETIME_FORMAT = "Y-m-d H:i:s e"
+DATE_FORMAT = "Y-m-d"
+TIME_FORMAT = "H:i"
+SHORT_DATE_FORMAT = "Y-m-d"
+SHORT_DATETIME_FORMAT = "Y-m-d H:i"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -125,3 +133,9 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Custom settings
+
+# The maximum length of a message. Changing this value requires a migration.
+MAX_MESSAGE_LENGTH = 1000
