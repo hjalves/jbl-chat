@@ -37,7 +37,11 @@ class ChatFormView(FormView):
         instance.sender = self.request.user.profile
         instance.receiver = profile
         instance.save()
-        return super().form_valid(form)
+        # If the request is an htmx request, return a partial response (just the messages)
+        if self.request.htmx:
+            return self.get_partial_response()
+        else:  # Otherwise, return the full page, by redirecting to the same page
+            return super().form_valid(form)
 
     def get_success_url(self):
         # Stay on the same page after sending the message
@@ -52,3 +56,13 @@ class ChatFormView(FormView):
         context["profile"] = other_profile
         context["messages"] = messages
         return context
+
+    def get_partial_response(self):
+        return render(
+            self.request, "chat/partials/messages.html", self.get_context_data()
+        )
+
+    def get_template_names(self):
+        if self.request.htmx:
+            return ["chat/partials/messages.html"]
+        return super().get_template_names()

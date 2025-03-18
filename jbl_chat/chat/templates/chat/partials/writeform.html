@@ -1,0 +1,18 @@
+<section class="reply">
+  <form class="reply-form" method="post" hx-post="{% url 'chat:chat' profile.nickname %}"
+        hx-target="#messages" hx-swap="outerHTML" hx-on::after-request="this.reset()">
+    {% csrf_token %}
+    <div class="reply-header">
+      <span class="title">Write a message</span>
+    </div>
+    <div class="reply-body">
+      <div class="reply-fields">
+        {{ form.content }}
+      </div>
+    </div>
+    <div class="reply-footer">
+      <input type="reset" value="Clear" title="Clear your message">
+      <input type="submit" value="Send message" title="Send your message" >
+    </div>
+  </form>
+</section>
