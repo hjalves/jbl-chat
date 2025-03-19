@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
@@ -9,15 +10,20 @@ from chat.models import Profile, Message
 
 
 def hello_world(request):
-    return render(request, "chat/mock_page.html")
+    return render(request, "chat/mocks/mock_page.html")
 
 
 def mock_page(request):
-    return render(request, "chat/mock_page.html")
+    return render(request, "chat/mocks/mock_page.html")
 
 
 def mock_messages(request):
-    return render(request, "chat/mock_messages.html")
+    return render(request, "chat/mocks/mock_messages.html")
+
+
+def mock_login(request):
+    form = AuthenticationForm()
+    return render(request, "chat/mocks/mock_login.html", {"form": form})
 
 
 @login_required

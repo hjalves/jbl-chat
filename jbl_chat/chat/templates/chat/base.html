@@ -10,7 +10,7 @@
   {% block extrastyle %}{% endblock %}
 </head>
 <body>
-{% include 'chat/sidebar.html' %}
+{% block sidebar %}{% include 'chat/sidebar.html' %}{% endblock %}
 <main class="content">
 {% block content %}{% endblock %}
 </main>

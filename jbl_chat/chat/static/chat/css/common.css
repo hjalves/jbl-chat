@@ -75,10 +75,9 @@ aside nav small {
     vertical-align: text-top;
 }
 
-main.content {
+.content {
     position: static;
     margin: 20px 20px 20px 210px;
-
 }
 
 .page {
