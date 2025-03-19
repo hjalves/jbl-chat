@@ -62,6 +62,7 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
+                "chat.processors.navigation_processor",
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
@@ -103,6 +104,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Authentication settings
+
+LOGIN_REDIRECT_URL = "/"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

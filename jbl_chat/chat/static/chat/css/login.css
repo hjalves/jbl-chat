@@ -83,3 +83,23 @@
     background: #ccc;
     border: 1px solid #888;
 }
+
+.errors {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px 18px;
+    font-size: 0.9em;
+    text-align: center;
+    z-index: 1000;
+    border: 1px solid #f5c6cb;
+    max-width: 90%;
+}
+
+.errors p {
+    margin: 0;
+    padding: 5px 0;
+}

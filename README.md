@@ -1,5 +1,9 @@
 # jbl-chat
 
+This is a simple chat application built with Django and HTMX.
+
+## Original README
+
 Let's set the stage, you are the founder of this exciting new messaging startup, you are tasked with building the first version of a product that is aimed to evolve with feedback from the team and users.
 
 You're building the backend using Django, and your initial task is to expose a starting API while also leveraging HTMX for interactive front-end experiences. With this first release, we want to deliver the following user stories:

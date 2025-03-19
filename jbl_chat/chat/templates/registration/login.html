@@ -9,6 +9,17 @@
 {% endblock %}
 
 {% block content %}
+
+{% if form.non_field_errors %}
+<div class="errors">
+  {% for error in form.non_field_errors %}
+  <p class="errornote">
+    {{ error }}
+  </p>
+  {% endfor %}
+</div>
+{% endif %}
+
 <div class="login">
   <div class="login-header">
     <span class="title">Authentication required</span>

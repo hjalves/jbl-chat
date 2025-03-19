@@ -26,10 +26,12 @@ def mock_login(request):
     return render(request, "chat/mocks/mock_login.html", {"form": form})
 
 
-@login_required
 def index(request):
-    context = {"chat_profiles": Profile.objects.exclude(user=request.user)}
-    return render(request, "chat/index.html", context)
+    return render(request, "chat/index.html")
+
+
+def about(request):
+    return render(request, "chat/about.html")
 
 
 @method_decorator(login_required, name="dispatch")
