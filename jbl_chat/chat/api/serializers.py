@@ -11,8 +11,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    sender = serializers.SlugRelatedField(slug_field="nickname", read_only=True)
-    receiver = serializers.SlugRelatedField(slug_field="nickname", read_only=True)
+    sender = serializers.SlugRelatedField(
+        source="sender.user", slug_field="username", read_only=True
+    )
+    receiver = serializers.SlugRelatedField(
+        source="receiver.user", slug_field="username", read_only=True
+    )
 
     class Meta:
         model = Message

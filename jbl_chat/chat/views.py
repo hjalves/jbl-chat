@@ -40,7 +40,7 @@ class ChatFormView(FormView):
     form_class = ChatForm
 
     def form_valid(self, form):
-        profile = get_object_or_404(Profile, nickname=self.kwargs["nickname"])
+        profile = get_object_or_404(Profile, user__username=self.kwargs["nickname"])
         instance = form.save(commit=False)
         instance.sender = self.request.user.profile
         instance.receiver = profile
@@ -58,7 +58,7 @@ class ChatFormView(FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         this_profile = self.request.user.profile
-        other_profile = get_object_or_404(Profile, nickname=self.kwargs["nickname"])
+        other_profile = get_object_or_404(Profile, user__username=self.kwargs["nickname"])
         messages = Message.objects.conversation_between(this_profile, other_profile)
         context["chat_profiles"] = Profile.objects.exclude(user=self.request.user)
         context["profile"] = other_profile

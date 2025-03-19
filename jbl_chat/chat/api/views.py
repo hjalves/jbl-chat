@@ -13,11 +13,11 @@ class ChatMessagesAPIView(ListCreateAPIView):
     def get_queryset(self):
         nickname = self.kwargs.get("nickname")
         current_profile = self.request.user.profile
-        other_profile = get_object_or_404(Profile, nickname=nickname)
+        other_profile = get_object_or_404(Profile, user__username=nickname)
         return Message.objects.conversation_between(current_profile, other_profile)
 
     def perform_create(self, serializer):
-        receiver = get_object_or_404(Profile, nickname=self.kwargs.get("nickname"))
+        receiver = get_object_or_404(Profile, user__username=self.kwargs.get("nickname"))
         serializer.save(sender=self.request.user.profile, receiver=receiver)
 
 

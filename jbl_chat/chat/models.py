@@ -3,6 +3,18 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.utils.formats import localize
+from django.utils import timezone
+
+
+class ProfileManager(models.Manager):
+    def get_by_natural_key(self, nickname):
+        return self.get(user__username=nickname)
+
+    def online(self):
+        """
+        Return a queryset of profiles that have been seen online recently.
+        """
+        return self.filter(last_seen__gt=timezone.now() - settings.USER_LAST_SEEN_TIMEOUT)
 
 
 class Profile(models.Model):
@@ -10,25 +22,39 @@ class Profile(models.Model):
     A member profile for a user of the chat application.
     """
 
-    user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
-    # The nickname is used to uniquely identify a member in the chat application.
-    nickname = models.SlugField(max_length=30, unique=True)
+    objects = ProfileManager()
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # The last time the user was seen online.
     last_seen = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = "profile"
         verbose_name_plural = "profiles"
-        ordering = ["nickname"]
+        ordering = ["user__username"]
 
     def __str__(self):
-        return self.nickname
+        return self.nickname()
+
+    def natural_key(self):
+        return (self.nickname(),)
+
+    def nickname(self):
+        return self.user.username
+
+    nickname.short_description = "Nickname"
+    nickname.admin_order_field = "user__username"
 
     def full_name(self):
         return self.user.get_full_name()
 
 
 class MessageManager(models.Manager):
+    def get_by_natural_key(self, sender_nickname, receiver_nickname, timestamp):
+        sender = Profile.objects.get_by_natural_key(sender_nickname)
+        receiver = Profile.objects.get_by_natural_key(receiver_nickname)
+        return self.get(sender=sender, receiver=receiver, timestamp=timestamp)
+
     def conversation_between(self, profile1, profile2):
         """
         Return a queryset of messages exchanged between two profiles.
@@ -51,18 +77,17 @@ class Message(models.Model):
     receiver = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="received_messages"
     )
-    content = models.TextField(max_length=settings.MAX_MESSAGE_LENGTH)
     timestamp = models.DateTimeField(auto_now_add=True)
-    read_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="The time the message was marked as read, by the receiver.",
-    )
+    content = models.TextField(max_length=settings.MAX_MESSAGE_LENGTH)
 
     class Meta:
         verbose_name = "message"
         verbose_name_plural = "messages"
         ordering = ["timestamp"]
+        unique_together = ["sender", "receiver", "timestamp"]
+
+    def natural_key(self):
+        return (self.sender.nickname(), self.receiver.nickname(), self.timestamp)
 
     def __str__(self):
         return (
