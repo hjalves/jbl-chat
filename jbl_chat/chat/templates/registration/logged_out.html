@@ -1,0 +1,23 @@
+{% extends "chat/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link href="{% static 'chat/css/login.css' %}" media="all" rel="stylesheet">
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+<div class="login">
+  <div class="login-header">
+    <span class="title">Logged out</span>
+  </div>
+  <div class="login-body">
+    <p>You have been successfully logged out.</p>
+  </div>
+  <div class="login-footer">
+    Go back <a href="{% url 'chat:index' %}">home</a>
+  </div>
+</div>
+{% endblock %}
