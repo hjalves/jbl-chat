@@ -1,3 +1,4 @@
 Django==3.2.8  # https://www.djangoproject.com/
 djangorestframework==3.12.4  # https://github.com/encode/django-rest-framework
 django-htmx==1.20.0  # https://github.com/adamchainz/django-htmx
+colorlog==6.9.0  # https://github.com/borntyping/python-colorlog

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "chat",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -39,7 +40,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_htmx",
     "rest_framework",
-    "chat",
 ]
 
 MIDDLEWARE = [
@@ -155,6 +155,53 @@ REST_FRAMEWORK = {
     ],
 }
 
+# Logging with colorlog
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "colored",
+            "stream": "ext://sys.stdout",
+        },
+    },
+    "formatters": {
+        "verbose": {"format": "[%(asctime)s] [%(levelname)s] %(module)s: %(message)s"},
+        "simple": {"format": "%(levelname)s %(message)s"},
+        "colored": {
+            "()": "colorlog.ColoredFormatter",
+            "format": "%(asctime)s.%(msecs)03d %(log_color)s[%(levelname)4.4s]%(reset)s "
+            "(%(process)s.%(threadName)s) %(name_log_color)s%(name)s%(reset)s: "
+            "%(message)s %(white)s(%(filename)s:%(lineno)d)%(reset)s",
+            "datefmt": "%H:%M:%S",
+            "log_colors": {
+                "DEBUG": "bold_cyan",
+                "INFO": "bold_green",
+                "WARNING": "bold_yellow",
+                "ERROR": "bold_red",
+                "CRITICAL": "bold_purple",
+            },
+            "secondary_log_colors": {
+                "name": {
+                    "DEBUG": "bold_white",
+                    "INFO": "bold_white",
+                    "WARNING": "bold_yellow",
+                    "ERROR": "bold_red",
+                    "CRITICAL": "bold_purple",
+                }
+            },
+        },
+    },
+    "root": {"level": "INFO", "handlers": ["console"]},
+    "loggers": {
+        "django": {"level": "INFO"},
+        "django.db": {"level": "INFO"},
+        "jbl_chat": {"level": "DEBUG"},
+    },
+}
 
 # Application custom settings
 
