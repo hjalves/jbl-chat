@@ -34,6 +34,10 @@ def about(request):
     return render(request, "chat/about.html")
 
 
+def api_index(request):
+    return render(request, "chat/api.html")
+
+
 @method_decorator(login_required, name="dispatch")
 class ChatFormView(FormView):
     template_name = "chat/chat.html"

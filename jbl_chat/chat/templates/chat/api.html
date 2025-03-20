@@ -1,0 +1,194 @@
+{% extends "chat/base.html" %}
+{% block content %}
+<article class="page">
+<h1 id="api-documentation">API Documentation</h1>
+<h2 id="base-url">Base URL</h2>
+<pre><code><span class="hljs-regexp">/api/</span>
+</code></pre><hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#users">Users</a>  <ul>
+<li><a href="#list-all-users">List all users</a>  </li>
+<li><a href="#retrieve-a-user-by-id">Retrieve a user by ID</a>  </li>
+</ul>
+</li>
+<li><a href="#chats">Chats</a>  <ul>
+<li><a href="#list-all-chats">List all chats</a>  </li>
+<li><a href="#retrieve-a-chat-by-username">Retrieve a chat by username</a>  </li>
+</ul>
+</li>
+<li><a href="#messages">Messages</a>  <ul>
+<li><a href="#list-all-messages-in-a-chat">List all messages in a chat</a>  </li>
+<li><a href="#create-a-new-message-in-a-chat">Create a new message in a chat</a>  </li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="endpoints-summary">Endpoints Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET</strong></td>
+<td><a href="#list-all-users"><code>/api/users/</code></a></td>
+<td>List all users</td>
+</tr>
+<tr>
+<td><strong>GET</strong></td>
+<td><a href="#retrieve-a-user-by-id"><code>/api/users/&lt;username&gt;/</code></a></td>
+<td>Retrieve a user by ID</td>
+</tr>
+<tr>
+<td><strong>GET</strong></td>
+<td><a href="#list-all-chats"><code>/api/chats/</code></a></td>
+<td>List all chats</td>
+</tr>
+<tr>
+<td><strong>GET</strong></td>
+<td><a href="#retrieve-a-chat-by-username"><code>/api/chats/&lt;username&gt;/</code></a></td>
+<td>Retrieve a chat by username</td>
+</tr>
+<tr>
+<td><strong>GET</strong></td>
+<td><a href="#list-all-messages-in-a-chat"><code>/api/chats/&lt;username&gt;/messages/</code></a></td>
+<td>List all messages in a chat</td>
+</tr>
+<tr>
+<td><strong>POST</strong></td>
+<td><a href="#create-a-new-message-in-a-chat"><code>/api/chats/&lt;username&gt;/messages/</code></a></td>
+<td>Create a new message in a chat</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="users">Users</h2>
+<h3 id="list-all-users">List all users</h3>
+<h4 id="-get-api-users-"><strong>GET</strong> <code>/api/users/</code></h4>
+<ul>
+<li><strong>Description:</strong> Retrieve a list of all available users.  </li>
+</ul>
+<p><strong>Response:</strong>  </p>
+<pre><code class="lang-json">[
+  { <span class="hljs-attr">"username"</span>: <span class="hljs-string">"alice"</span>, <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Alice Doe"</span> },
+  { <span class="hljs-attr">"username"</span>: <span class="hljs-string">"bob"</span>, <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Bob Smith"</span> }
+]
+</code></pre>
+<ul>
+<li><strong>200 OK</strong> – List of users retrieved successfully.  </li>
+</ul>
+<hr>
+<h3 id="retrieve-a-user-by-id">Retrieve a user by ID</h3>
+<h4 id="-get-api-users-username-"><strong>GET</strong> <code>/api/users/&lt;username&gt;/</code></h4>
+<ul>
+<li><strong>Description:</strong> Retrieve a single user by their username.  </li>
+<li><strong>Path Parameters:</strong>  <ul>
+<li><code>username</code> <em>(string)</em> – The username of the user to retrieve.  </li>
+</ul>
+</li>
+</ul>
+<p><strong>Response:</strong>  </p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"username"</span>: <span class="hljs-string">"alice"</span>,
+  <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Alice Doe"</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"alice@example.com"</span>
+}
+</code></pre>
+<ul>
+<li><strong>200 OK</strong> – User found.  </li>
+<li><strong>404 Not Found</strong> – User does not exist.  </li>
+</ul>
+<hr>
+<h2 id="chats">Chats</h2>
+<h3 id="list-all-chats">List all chats</h3>
+<h4 id="-get-api-chats-"><strong>GET</strong> <code>/api/chats/</code></h4>
+<ul>
+<li><strong>Description:</strong> Retrieve a list of all chats.  </li>
+</ul>
+<p><strong>Response:</strong>  </p>
+<pre><code class="lang-json">[
+  { <span class="hljs-attr">"chat_id"</span>: <span class="hljs-string">"1"</span>, <span class="hljs-attr">"participants"</span>: [<span class="hljs-string">"alice"</span>, <span class="hljs-string">"bob"</span>] },
+  { <span class="hljs-attr">"chat_id"</span>: <span class="hljs-string">"2"</span>, <span class="hljs-attr">"participants"</span>: [<span class="hljs-string">"charlie"</span>, <span class="hljs-string">"dan"</span>] }
+]
+</code></pre>
+<ul>
+<li><strong>200 OK</strong> – Chats retrieved successfully.  </li>
+</ul>
+<hr>
+<h3 id="retrieve-a-chat-by-username">Retrieve a chat by username</h3>
+<h4 id="-get-api-chats-username-"><strong>GET</strong> <code>/api/chats/&lt;username&gt;/</code></h4>
+<ul>
+<li><strong>Description:</strong> Retrieve a chat associated with a username.  </li>
+<li><strong>Path Parameters:</strong>  <ul>
+<li><code>username</code> <em>(string)</em> – The username associated with the chat.  </li>
+</ul>
+</li>
+</ul>
+<p><strong>Response:</strong>  </p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"chat_id"</span>: <span class="hljs-string">"1"</span>,
+  <span class="hljs-attr">"participants"</span>: [<span class="hljs-string">"alice"</span>, <span class="hljs-string">"bob"</span>],
+  <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"2024-03-20T12:00:00Z"</span>
+}
+</code></pre>
+<ul>
+<li><strong>200 OK</strong> – Chat retrieved successfully.  </li>
+<li><strong>404 Not Found</strong> – Chat not found.  </li>
+</ul>
+<hr>
+<h2 id="messages">Messages</h2>
+<h3 id="list-all-messages-in-a-chat">List all messages in a chat</h3>
+<h4 id="-get-api-chats-username-messages-"><strong>GET</strong> <code>/api/chats/&lt;username&gt;/messages/</code></h4>
+<ul>
+<li><strong>Description:</strong> Retrieve all messages in a chat.  </li>
+<li><strong>Path Parameters:</strong>  <ul>
+<li><code>username</code> <em>(string)</em> – The username associated with the chat.  </li>
+</ul>
+</li>
+</ul>
+<p><strong>Response:</strong>  </p>
+<pre><code class="lang-json">[
+  { <span class="hljs-attr">"message_id"</span>: <span class="hljs-string">"101"</span>, <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"alice"</span>, <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hello!"</span> },
+  { <span class="hljs-attr">"message_id"</span>: <span class="hljs-string">"102"</span>, <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"bob"</span>, <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hey there!"</span> }
+]
+</code></pre>
+<ul>
+<li><strong>200 OK</strong> – Messages retrieved successfully.  </li>
+<li><strong>404 Not Found</strong> – Chat does not exist.  </li>
+</ul>
+<hr>
+<h3 id="create-a-new-message-in-a-chat">Create a new message in a chat</h3>
+<h4 id="-post-api-chats-username-messages-"><strong>POST</strong> <code>/api/chats/&lt;username&gt;/messages/</code></h4>
+<ul>
+<li><strong>Description:</strong> Send a new message in a chat.  </li>
+<li><strong>Path Parameters:</strong>  <ul>
+<li><code>username</code> <em>(string)</em> – The username associated with the chat.  </li>
+</ul>
+</li>
+<li><strong>Request Body:</strong> <em>(JSON)</em>  <pre><code class="lang-json">{
+<span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hello, how are you?"</span>
+}
+</code></pre>
+</li>
+</ul>
+<p><strong>Response:</strong>  </p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"message_id"</span>: <span class="hljs-string">"103"</span>,
+  <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"alice"</span>,
+  <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hello, how are you?"</span>,
+  <span class="hljs-attr">"sent_at"</span>: <span class="hljs-string">"2024-03-20T12:05:00Z"</span>
+}
+</code></pre>
+<ul>
+<li><strong>201 Created</strong> – Message sent successfully.  </li>
+<li><strong>400 Bad Request</strong> – Invalid input.  </li>
+<li><strong>404 Not Found</strong> – Chat not found.  </li>
+</ul>
+</article>
+
+{% endblock %}
