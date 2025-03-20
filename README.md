@@ -32,11 +32,15 @@ The following users are available by default:
 The API is available at `/api/`. It provides the following endpoints:
 
 - `GET /api/users/`: List all users.
-- `GET /api/users/<int:pk>/`: Retrieve a user by ID.
+- `GET /api/users/me/`: Retrieve the current user.
+- `GET /api/users/<username>/`: Retrieve a user by ID.
 - `GET /api/chats/`: List all chats.
-- `GET /api/chats/<str:username>/`: Retrieve a chat by username.
-- `GET /api/chats/<str:username>/messages/`: List all messages in a chat.
-- `POST /api/chats/<str:username>/messages/`: Create a new message in a chat.
+- `GET /api/chats/<username>/`: Retrieve a chat by username.
+- `GET /api/chats/<username>/messages/`: List all messages in a chat.
+- `POST /api/chats/<username>/messages/`: Create a new message in a chat.
+
+There is more information about the API in the built-in documentation at
+`/api/`.
 
 ## Original README
 
