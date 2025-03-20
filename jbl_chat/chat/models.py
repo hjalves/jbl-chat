@@ -45,6 +45,12 @@ class Profile(models.Model):
     nickname.short_description = "Nickname"
     nickname.admin_order_field = "user__username"
 
+    def username(self):
+        return self.user.username
+
+    username.short_description = "Username"
+    username.admin_order_field = "user__username"
+
     def full_name(self):
         return self.user.get_full_name()
 

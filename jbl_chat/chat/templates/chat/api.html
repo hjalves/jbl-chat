@@ -3,27 +3,28 @@
 <article class="page">
 <h1 id="api-documentation">API Documentation</h1>
 <h2 id="base-url">Base URL</h2>
+<p>The base URL for the API is:  </p>
 <pre><code><span class="hljs-regexp">/api/</span>
-</code></pre><hr>
-<h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li><a href="#users">Users</a>  <ul>
-<li><a href="#list-all-users">List all users</a>  </li>
-<li><a href="#retrieve-a-user-by-id">Retrieve a user by ID</a>  </li>
+</code></pre><p>It is relative to the root URL of the server. For example, if the server is running on <code>http://localhost:8000</code>, the base URL for the API would be <code>http://localhost:8000/api/</code>.</p>
+<h2 id="authentication">Authentication</h2>
+<p>Currently, the API only supports session-based authentication and basic authentication.</p>
+<h3 id="session-based-authentication">Session-based Authentication</h3>
+<p>To authenticate using session-based authentication, you need to log in using the <code>/accounts/login/</code> endpoint. This will create a session cookie that you can use to authenticate future requests.</p>
+<h3 id="basic-authentication">Basic Authentication</h3>
+<p>To authenticate using basic authentication, you need to include an <code>Authorization</code> header in your request with the value <code>Basic &lt;base64-encoded-username-and-password&gt;</code>. For example, if your username is <code>alice</code> and your password is <code>password</code>, you would encode <code>alice:password</code> as <code>YWxpY2U6cGFzc3dvcmQ=</code> and include it in the <code>Authorization</code> header like this:</p>
+<pre><code><span class="hljs-symbol">Authorization</span>: <span class="hljs-keyword">Basic </span>YWxpY2U6cGFzc3dvcmQ=
+</code></pre><h2 id="error-handling">Error Handling</h2>
+<p>The API uses standard HTTP status codes to indicate the success or failure of a request. The following status codes are used:</p>
+<ul>
+<li><strong>200 OK</strong> – The request was successful.</li>
+<li><strong>201 Created</strong> – The request was successful and a new resource was created.</li>
+<li><strong>400 Bad Request</strong> – The request was invalid or could not be processed.</li>
+<li><strong>401 Unauthorized</strong> – The request requires authentication.</li>
+<li><strong>403 Forbidden</strong> – The request is not allowed.</li>
+<li><strong>404 Not Found</strong> – The requested resource could not be found.</li>
+<li><strong>405 Method Not Allowed</strong> – The request method is not allowed.</li>
+<li><strong>500 Internal Server Error</strong> – An unexpected error occurred on the server.</li>
 </ul>
-</li>
-<li><a href="#chats">Chats</a>  <ul>
-<li><a href="#list-all-chats">List all chats</a>  </li>
-<li><a href="#retrieve-a-chat-by-username">Retrieve a chat by username</a>  </li>
-</ul>
-</li>
-<li><a href="#messages">Messages</a>  <ul>
-<li><a href="#list-all-messages-in-a-chat">List all messages in a chat</a>  </li>
-<li><a href="#create-a-new-message-in-a-chat">Create a new message in a chat</a>  </li>
-</ul>
-</li>
-</ol>
-<hr>
 <h2 id="endpoints-summary">Endpoints Summary</h2>
 <table>
 <thead>
@@ -41,8 +42,13 @@
 </tr>
 <tr>
 <td><strong>GET</strong></td>
-<td><a href="#retrieve-a-user-by-id"><code>/api/users/&lt;username&gt;/</code></a></td>
-<td>Retrieve a user by ID</td>
+<td><a href="#retrieve-the-current-user"><code>/api/users/me/</code></a></td>
+<td>Retrieve the current user</td>
+</tr>
+<tr>
+<td><strong>GET</strong></td>
+<td><a href="#retrieve-a-user-by-username"><code>/api/users/&lt;username&gt;/</code></a></td>
+<td>Retrieve a user by username</td>
 </tr>
 <tr>
 <td><strong>GET</strong></td>
@@ -74,16 +80,51 @@
 <li><strong>Description:</strong> Retrieve a list of all available users.  </li>
 </ul>
 <p><strong>Response:</strong>  </p>
-<pre><code class="lang-json">[
-  { <span class="hljs-attr">"username"</span>: <span class="hljs-string">"alice"</span>, <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Alice Doe"</span> },
-  { <span class="hljs-attr">"username"</span>: <span class="hljs-string">"bob"</span>, <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Bob Smith"</span> }
-]
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"count"</span>: <span class="hljs-number">3</span>,
+  <span class="hljs-attr">"next"</span>: <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">"previous"</span>: <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">"results"</span>: [
+    {
+      <span class="hljs-attr">"username"</span>: <span class="hljs-string">"anna"</span>,
+      <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Anna Whitmore"</span>,
+      <span class="hljs-attr">"last_seen"</span>: <span class="hljs-literal">null</span>
+    },
+    {
+      <span class="hljs-attr">"username"</span>: <span class="hljs-string">"bob"</span>,
+      <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Bob Kensington"</span>,
+      <span class="hljs-attr">"last_seen"</span>: <span class="hljs-literal">null</span>
+    },
+    {
+      <span class="hljs-attr">"username"</span>: <span class="hljs-string">"charlie"</span>,
+      <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Charlie Davenport"</span>,
+      <span class="hljs-attr">"last_seen"</span>: <span class="hljs-literal">null</span>
+    }
+  ]
+}
 </code></pre>
 <ul>
 <li><strong>200 OK</strong> – List of users retrieved successfully.  </li>
 </ul>
 <hr>
-<h3 id="retrieve-a-user-by-id">Retrieve a user by ID</h3>
+<h3 id="retrieve-the-current-user">Retrieve the current user</h3>
+<h4 id="-get-api-users-me-"><strong>GET</strong> <code>/api/users/me/</code></h4>
+<ul>
+<li><strong>Description:</strong> Retrieve the current user.</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"username"</span>: <span class="hljs-string">"anna"</span>,
+  <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Anna Whitmore"</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"anna.whitmore@email.com"</span>,
+  <span class="hljs-attr">"is_staff"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+<ul>
+<li><strong>200 OK</strong> – User retrieved successfully.</li>
+</ul>
+<hr>
+<h3 id="retrieve-a-user-by-username">Retrieve a user by username</h3>
 <h4 id="-get-api-users-username-"><strong>GET</strong> <code>/api/users/&lt;username&gt;/</code></h4>
 <ul>
 <li><strong>Description:</strong> Retrieve a single user by their username.  </li>
@@ -94,9 +135,9 @@
 </ul>
 <p><strong>Response:</strong>  </p>
 <pre><code class="lang-json">{
-  <span class="hljs-attr">"username"</span>: <span class="hljs-string">"alice"</span>,
-  <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Alice Doe"</span>,
-  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"alice@example.com"</span>
+  <span class="hljs-attr">"username"</span>: <span class="hljs-string">"bob"</span>,
+  <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"Bob Kensington"</span>,
+  <span class="hljs-attr">"last_seen"</span>: <span class="hljs-literal">null</span>
 }
 </code></pre>
 <ul>
@@ -111,10 +152,23 @@
 <li><strong>Description:</strong> Retrieve a list of all chats.  </li>
 </ul>
 <p><strong>Response:</strong>  </p>
-<pre><code class="lang-json">[
-  { <span class="hljs-attr">"chat_id"</span>: <span class="hljs-string">"1"</span>, <span class="hljs-attr">"participants"</span>: [<span class="hljs-string">"alice"</span>, <span class="hljs-string">"bob"</span>] },
-  { <span class="hljs-attr">"chat_id"</span>: <span class="hljs-string">"2"</span>, <span class="hljs-attr">"participants"</span>: [<span class="hljs-string">"charlie"</span>, <span class="hljs-string">"dan"</span>] }
-]
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"count"</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">"next"</span>: <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">"previous"</span>: <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">"results"</span>: [
+    {
+      <span class="hljs-attr">"username"</span>: <span class="hljs-string">"bob"</span>,
+      <span class="hljs-attr">"total_messages"</span>: <span class="hljs-number">12</span>,
+      <span class="hljs-attr">"last_contact"</span>: <span class="hljs-string">"2025-03-16T12:14:21.144000Z"</span>
+    },
+    {
+      <span class="hljs-attr">"username"</span>: <span class="hljs-string">"charlie"</span>,
+      <span class="hljs-attr">"total_messages"</span>: <span class="hljs-number">3</span>,
+      <span class="hljs-attr">"last_contact"</span>: <span class="hljs-string">"2025-03-16T14:02:15.784000Z"</span>
+    }
+  ]
+}
 </code></pre>
 <ul>
 <li><strong>200 OK</strong> – Chats retrieved successfully.  </li>
@@ -131,9 +185,9 @@
 </ul>
 <p><strong>Response:</strong>  </p>
 <pre><code class="lang-json">{
-  <span class="hljs-attr">"chat_id"</span>: <span class="hljs-string">"1"</span>,
-  <span class="hljs-attr">"participants"</span>: [<span class="hljs-string">"alice"</span>, <span class="hljs-string">"bob"</span>],
-  <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"2024-03-20T12:00:00Z"</span>
+  <span class="hljs-attr">"username"</span>: <span class="hljs-string">"charlie"</span>,
+  <span class="hljs-attr">"total_messages"</span>: <span class="hljs-number">3</span>,
+  <span class="hljs-attr">"last_contact"</span>: <span class="hljs-string">"2025-03-16T14:02:15.784000Z"</span>
 }
 </code></pre>
 <ul>
@@ -152,10 +206,34 @@
 </li>
 </ul>
 <p><strong>Response:</strong>  </p>
-<pre><code class="lang-json">[
-  { <span class="hljs-attr">"message_id"</span>: <span class="hljs-string">"101"</span>, <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"alice"</span>, <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hello!"</span> },
-  { <span class="hljs-attr">"message_id"</span>: <span class="hljs-string">"102"</span>, <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"bob"</span>, <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hey there!"</span> }
-]
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"count"</span>: <span class="hljs-number">3</span>,
+  <span class="hljs-attr">"next"</span>: <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">"previous"</span>: <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">"results"</span>: [
+    {
+      <span class="hljs-attr">"id"</span>: <span class="hljs-number">69</span>,
+      <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"anna"</span>,
+      <span class="hljs-attr">"receiver"</span>: <span class="hljs-string">"charlie"</span>,
+      <span class="hljs-attr">"timestamp"</span>: <span class="hljs-string">"2025-03-16T14:00:12.512000Z"</span>,
+      <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hey Charlie, do you know any good books on software architecture?"</span>
+    },
+    {
+      <span class="hljs-attr">"id"</span>: <span class="hljs-number">70</span>,
+      <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"charlie"</span>,
+      <span class="hljs-attr">"receiver"</span>: <span class="hljs-string">"anna"</span>,
+      <span class="hljs-attr">"timestamp"</span>: <span class="hljs-string">"2025-03-16T14:01:30.893000Z"</span>,
+      <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Yes! ‘Clean Architecture’ by Robert C. Martin is a great one. Also, ‘The Software Architect Elevator’ is quite insightful."</span>
+    },
+    {
+      <span class="hljs-attr">"id"</span>: <span class="hljs-number">71</span>,
+      <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"anna"</span>,
+      <span class="hljs-attr">"receiver"</span>: <span class="hljs-string">"charlie"</span>,
+      <span class="hljs-attr">"timestamp"</span>: <span class="hljs-string">"2025-03-16T14:02:15.784000Z"</span>,
+      <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Awesome! I’ll check them out. Thanks!"</span>
+    }
+  ]
+}
 </code></pre>
 <ul>
 <li><strong>200 OK</strong> – Messages retrieved successfully.  </li>
@@ -171,17 +249,18 @@
 </ul>
 </li>
 <li><strong>Request Body:</strong> <em>(JSON)</em>  <pre><code class="lang-json">{
-<span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hello, how are you?"</span>
+  <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hello, Charlie! How are you doing?"</span>
 }
 </code></pre>
 </li>
 </ul>
 <p><strong>Response:</strong>  </p>
 <pre><code class="lang-json">{
-  <span class="hljs-attr">"message_id"</span>: <span class="hljs-string">"103"</span>,
-  <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"alice"</span>,
-  <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hello, how are you?"</span>,
-  <span class="hljs-attr">"sent_at"</span>: <span class="hljs-string">"2024-03-20T12:05:00Z"</span>
+    <span class="hljs-attr">"id"</span>: <span class="hljs-number">89</span>,
+    <span class="hljs-attr">"sender"</span>: <span class="hljs-string">"anna"</span>,
+    <span class="hljs-attr">"receiver"</span>: <span class="hljs-string">"charlie"</span>,
+    <span class="hljs-attr">"timestamp"</span>: <span class="hljs-string">"2025-03-20T16:56:16.260162Z"</span>,
+    <span class="hljs-attr">"content"</span>: <span class="hljs-string">"Hello, Charlie! How are you doing?"</span>
 }
 </code></pre>
 <ul>

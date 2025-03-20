@@ -4,6 +4,7 @@ from chat.api.views import (
     ChatMessagesAPIView,
     UserListApiView,
     UserDetailApiView,
+    CurrentUserApiView,
     ChatListApiView,
     ChatDetailApiView,
 )
@@ -14,5 +15,6 @@ api_urlpatterns = [
     path("chats/<slug:nickname>/", ChatDetailApiView.as_view()),
     path("chats/<slug:nickname>/messages/", ChatMessagesAPIView.as_view()),
     path("users/", UserListApiView.as_view()),
+    path("users/me/", CurrentUserApiView.as_view()),
     path("users/<slug:username>/", UserDetailApiView.as_view()),
 ]

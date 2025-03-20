@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from chat.models import Message, Profile
@@ -9,8 +10,8 @@ class ChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ["nickname", "total_messages", "last_contact"]
-        read_only_fields = ["nickname", "total_messages", "last_contact"]
+        fields = ["username", "total_messages", "last_contact"]
+        read_only_fields = ["username", "total_messages", "last_contact"]
 
     def get_total_messages(self, obj):
         request = self.context.get("request")
@@ -30,8 +31,20 @@ class ChatSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ["nickname", "full_name", "last_seen"]
-        read_only_fields = ["nickname", "full_name", "last_seen"]
+        fields = ["username", "full_name", "last_seen"]
+        read_only_fields = ["username", "full_name", "last_seen"]
+
+
+class CurrentUserSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ["username", "full_name", "email", "is_staff"]
+        read_only_fields = ["username", "full_name", "email", "is_staff"]
+
+    def get_full_name(self, obj):
+        return obj.get_full_name()
 
 
 class MessageSerializer(serializers.ModelSerializer):

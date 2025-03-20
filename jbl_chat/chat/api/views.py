@@ -2,7 +2,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListCreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from chat.api.serializers import MessageSerializer, ProfileSerializer, ChatSerializer
+from chat.api.serializers import (
+    MessageSerializer,
+    ProfileSerializer,
+    ChatSerializer,
+    CurrentUserSerializer,
+)
 from chat.models import Message, Profile
 
 
@@ -18,6 +23,14 @@ class UserDetailApiView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     lookup_field = "user__username"
     lookup_url_kwarg = "username"
+
+
+class CurrentUserApiView(RetrieveAPIView):
+    serializer_class = CurrentUserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
 
 
 class ChatListApiView(ListAPIView):
