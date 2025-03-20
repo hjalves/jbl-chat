@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+PROJ_DIR = BASE_DIR.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -85,6 +85,10 @@ DATABASES = {
     }
 }
 
+# Fixtures
+# https://docs.djangoproject.com/en/3.2/ref/settings/#std-setting-FIXTURE_DIRS
+
+FIXTURE_DIRS = [PROJ_DIR / "fixtures"]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
