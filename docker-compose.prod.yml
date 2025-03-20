@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    restart: always
+    init: true
+    image: jbl-chat:latest
+    command: gunicorn jbl_chat.wsgi:application --bind 0.0.0.0:8002
+    volumes:
+      - ./database:/code/database
+    ports:
+      - "8002:8002"
+    environment:
+      - DB_NAME=/code/database/db.sqlite3
