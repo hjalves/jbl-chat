@@ -46,7 +46,7 @@ class ChatDetailApiView(RetrieveAPIView):
     queryset = Profile.objects.all()
     permission_classes = [IsAuthenticated]
     lookup_field = "user__username"
-    lookup_url_kwarg = "nickname"
+    lookup_url_kwarg = "username"
 
 
 class ChatMessagesAPIView(ListCreateAPIView):
@@ -54,11 +54,11 @@ class ChatMessagesAPIView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        nickname = self.kwargs.get("nickname")
+        username = self.kwargs.get("username")
         current_profile = self.request.user.profile
-        other_profile = get_object_or_404(Profile, user__username=nickname)
+        other_profile = get_object_or_404(Profile, user__username=username)
         return Message.objects.conversation_between(current_profile, other_profile)
 
     def perform_create(self, serializer):
-        receiver = get_object_or_404(Profile, user__username=self.kwargs.get("nickname"))
+        receiver = get_object_or_404(Profile, user__username=self.kwargs.get("username"))
         serializer.save(sender=self.request.user.profile, receiver=receiver)

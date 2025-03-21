@@ -7,8 +7,8 @@ from django.utils import timezone
 
 
 class ProfileManager(models.Manager):
-    def get_by_natural_key(self, nickname):
-        return self.get(user__username=nickname)
+    def get_by_natural_key(self, username):
+        return self.get(user__username=username)
 
     def online(self):
         """
@@ -34,10 +34,10 @@ class Profile(models.Model):
         ordering = ["user__username"]
 
     def __str__(self):
-        return self.nickname()
+        return self.username()
 
     def natural_key(self):
-        return (self.nickname(),)
+        return (self.username(),)
 
     def nickname(self):
         return self.user.username
@@ -56,9 +56,9 @@ class Profile(models.Model):
 
 
 class MessageManager(models.Manager):
-    def get_by_natural_key(self, sender_nickname, receiver_nickname, timestamp):
-        sender = Profile.objects.get_by_natural_key(sender_nickname)
-        receiver = Profile.objects.get_by_natural_key(receiver_nickname)
+    def get_by_natural_key(self, sender_username, receiver_username, timestamp):
+        sender = Profile.objects.get_by_natural_key(sender_username)
+        receiver = Profile.objects.get_by_natural_key(receiver_username)
         return self.get(sender=sender, receiver=receiver, timestamp=timestamp)
 
     def conversation_between(self, profile1, profile2):
@@ -93,7 +93,7 @@ class Message(models.Model):
         unique_together = ["sender", "receiver", "timestamp"]
 
     def natural_key(self):
-        return (self.sender.nickname(), self.receiver.nickname(), self.timestamp)
+        return (self.sender.username(), self.receiver.username(), self.timestamp)
 
     def __str__(self):
         return (

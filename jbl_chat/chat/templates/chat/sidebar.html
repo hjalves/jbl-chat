@@ -16,7 +16,7 @@
     <ul>
       <li class="title">Chats</li>
       {% for profile in available_chats %}
-      <li><a href="{% url 'chat:chat' profile.nickname %}">{{ profile.nickname }}</a></li>
+      <li><a href="{% url 'chat:chat' profile.username %}">{{ profile.username }}</a></li>
       {% endfor %}
     </ul>
   </nav>

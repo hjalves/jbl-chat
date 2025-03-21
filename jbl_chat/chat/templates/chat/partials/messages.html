@@ -1,4 +1,4 @@
-<section id="messages" hx-get="{% url 'chat:chat' profile.nickname %}" hx-trigger="every 3s" hx-swap="outerHTML">
+<section id="messages" hx-get="{% url 'chat:chat' profile.username %}" hx-trigger="every 3s" hx-swap="outerHTML">
   {% for message in messages %}
   <article class="message {% if message.unread %}unread{% endif %}" id="message-{{ message.id }}">
     <div class="message-header">

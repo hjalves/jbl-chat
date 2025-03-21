@@ -13,5 +13,5 @@ urlpatterns = [
     path("mock/login/", mock_login, name="mock_login"),
     path("api/", api_index, name="api"),
     path("api/", include(api_urlpatterns)),
-    path("chats/<slug:nickname>/", ChatFormView.as_view(), name="chat"),
+    path("chats/<slug:username>/", ChatFormView.as_view(), name="chat"),
 ]

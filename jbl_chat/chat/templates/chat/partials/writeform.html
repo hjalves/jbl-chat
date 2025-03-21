@@ -1,5 +1,5 @@
 <section class="reply">
-  <form class="reply-form" method="post" hx-post="{% url 'chat:chat' profile.nickname %}"
+  <form class="reply-form" method="post" hx-post="{% url 'chat:chat' profile.username %}"
         hx-target="#messages" hx-swap="outerHTML" hx-on::after-request="this.reset()">
     {% csrf_token %}
     <div class="reply-header">
