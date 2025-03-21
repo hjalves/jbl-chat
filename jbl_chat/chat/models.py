@@ -25,7 +25,6 @@ class Profile(models.Model):
     objects = ProfileManager()
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # The last time the user was seen online.
     last_seen = models.DateTimeField(null=True, blank=True)
 
     class Meta:
@@ -38,12 +37,6 @@ class Profile(models.Model):
 
     def natural_key(self):
         return (self.username(),)
-
-    def nickname(self):
-        return self.user.username
-
-    nickname.short_description = "Nickname"
-    nickname.admin_order_field = "user__username"
 
     def username(self):
         return self.user.username
